@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans text-navy-dark antialiased bg-white;
+  }
+  /* Stops one wide child from widening the whole document on phones, which
+     also made position:fixed modals render past the screen edge (fixed
+     resolves against the layout viewport, not the visual one).
+     `clip` rather than `hidden`: `hidden` turns this into a scroll container
+     and would break every `position: sticky` element on the site. */
+  html,
+  body {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-20 lg:py-28;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-navy;
+  }
+
+  .gold-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold to-gold-dark;
+  }
+
+  .premium-card {
+    @apply bg-white rounded-2xl shadow-card border border-primary-100/60 transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1.5;
+  }
+
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-xl border border-white/60 rounded-2xl shadow-card;
+  }
+
+  .glossy-card {
+    @apply relative rounded-2xl border border-primary-200/70 bg-gradient-to-br from-primary-50 via-white to-primary-100/50 shadow-card overflow-hidden;
+  }
+
+  .btn-base {
+    @apply inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 disabled:opacity-60;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+
+@layer components {
+  /* Cursor-following glow for service cards */
+  .svc-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .svc-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(44, 103, 158, 0.14), transparent 42%);
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+  .svc-card:hover::before {
+    opacity: 1;
+  }
+}
+
+@layer utilities {
+  /* Glossy sky-blue scrollbar (matches hero sky background) */
+  .sky-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #5fa2d5 #eaf3fb;
+  }
+  .sky-scroll::-webkit-scrollbar {
+    width: 10px;
+  }
+  .sky-scroll::-webkit-scrollbar-track {
+    background: #eaf3fb;
+    border-radius: 999px;
+  }
+  .sky-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #93c3e5 0%, #3c82c2 100%);
+    border-radius: 999px;
+    border: 2px solid #eaf3fb;
+  }
+  .sky-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #5fa2d5 0%, #2c679e 100%);
+  }
+
+  /* Infinite marquee for trust bar */
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .animate-marquee {
+    animation: marquee 32s linear infinite;
+    will-change: transform;
+  }
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+
+  /* Subtle tech dot grid */
+  .tech-dots {
+    background-image: radial-gradient(rgba(44, 103, 158, 0.12) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  /* Tech line grid (for dark cards) */
+  .tech-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+}
